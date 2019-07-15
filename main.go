@@ -1,23 +1,22 @@
 package main
-
 import (
-  "net/http"
-
-  "github.com/labstack/echo"
+    "net/http"
+    "github.com/labstack/echo"
 )
 
-func main() {
-  // create a new echo instance
-  e := echo.New()
-  // Route / to handler function
-  e.GET("/", controller)
-  // start the server, and log if it fails
-  e.Logger.Fatal(e.Start(":8080"))
+func controllerUserWitQueryParam(c echo.Context) error {
+    // url param
+    urlParam := c.Param("name_param")
+    // query param
+    ageUser := c.QueryParam("age")
+    return c.JSON(http.StatusOK, map[string]string{
+        "name": urlParam,
+        "age":  ageUser,
+    })
 }
 
-// handler - Simple handler to make sure environment is setup
-func controller(c echo.Context) error {
-  // return the string "Hello World" as the response body
-  // with an http.StatusOK (200) status
-  return c.String(http.StatusOK, "Hello World")
+func main() {
+    e := echo.New()
+    e.GET("/user/:name_param", controllerUserWitQueryParam)
+    e.Start(":8000")
 }
