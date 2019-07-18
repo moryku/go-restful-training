@@ -11,6 +11,7 @@ List of basic routes:
 | `/api/hello?name={name}`    | GET    | Hello, `{name}`        |
 
 List of user routes:
+
 | Route                       | HTTP    | Description                         |
 | --------------------------- |:-------:| -----------------------------------:|
 | `/api/users`                | GET     | Get all users data                  |
@@ -22,6 +23,7 @@ List of user routes:
 | `/api/users?name={na}`      | GET     | Get {na} like in users              |
 
 List of book routes:
+
 | Route                       | HTTP    | Description                  |
 | --------------------------- |:-------:| ----------------------------:|
 | `/api/book`                | GET     | Get all book data            |
