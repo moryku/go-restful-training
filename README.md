@@ -24,9 +24,11 @@ List of user routes:
 
 List of book routes:
 
-| Route                       | HTTP    | Description                  |
-| --------------------------- |:-------:| ----------------------------:|
-| `/api/book`                | GET     | Get all book data            |
-| `/api/book/:id`            | GET     | Get singel user by `id`      |
-| `/api/book`                | POST    | Create new user              |
-| `/api/book/:id`            | DELETE  | Delete user by `id`          |
+| Route                       | HTTP    | Description                         |
+| --------------------------- |:-------:| -----------------------------------:|
+| `/api/books`                | GET     | Get all books data                  |
+| `/api/books/:id`            | GET     | Get singel book by `id`             |
+| `/api/books`                | POST    | Create new book                     |
+| `/api/books/:id`            | DELETE  | Delete book by `id`                 |
+| `/api/books/:id`            | PUT     | Update book information             |
+| `/api/books?name={na}`      | GET     | Get {na} like in books              |
