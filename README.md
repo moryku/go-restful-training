@@ -18,8 +18,8 @@ List of user routes:
 | `/api/users`                | POST    | Create new user                     |
 | `/api/users/:id`            | DELETE  | Delete user by `id`                 |
 | `/api/users/:id`            | PUT     | Update user information             |
-| `/api/users?name={name}`    | GET     | (filter) Get {name} match in users  |
-| `/api/users?name={na}`      | GET     | (filter) Get {na} like in users     |
+| `/api/users?name={name}`    | GET     | Get {name} match in users           |
+| `/api/users?name={na}`      | GET     | Get {na} like in users              |
 
 List of book routes:
 | Route                       | HTTP    | Description                  |
