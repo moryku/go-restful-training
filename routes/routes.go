@@ -10,6 +10,9 @@ func New() *echo.Echo {
 
 	// routing
 	e.GET("/api/hello", controllers.HelloController)
+	e.GET("/api/users", controllers.FindAllUserController)
+	e.POST("/api/users", controllers.CreateUserController)
+	e.DELETE("/api/users/:id", controllers.DeleteUserController)
 
 	return e
 }

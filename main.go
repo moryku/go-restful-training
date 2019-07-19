@@ -1,14 +1,14 @@
 package main
 
 import (
-	"fmt"
-
+	"github.com/iswanulumam/go-restful-training/models"
 	"github.com/iswanulumam/go-restful-training/routes"
 )
 
 func main() {
 	e := routes.New()
 
-	fmt.Println("App listening on port :8000")
+	// init db connection
+	models.InitDB("root:root123@/go_db?charset=utf8&parseTime=True&loc=Local")
 	e.Start(":8080")
 }
