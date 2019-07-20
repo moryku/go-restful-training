@@ -10,11 +10,21 @@ import (
 )
 
 func FindAllUserController(c echo.Context) error {
-	users, err := models.FindAllUser()
+	users, err := models.GetAllUser()
 	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 	return c.JSON(http.StatusOK, users)
+}
+
+func FindUserByIdController(c echo.Context) error {
+	id, _ := strconv.Atoi(c.Param("id"))
+	user, err := models.GetUserById(id)
+
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+	return c.JSON(http.StatusOK, user)
 }
 
 func CreateUserController(c echo.Context) error {
@@ -37,9 +47,25 @@ func CreateUserController(c echo.Context) error {
 }
 
 func DeleteUserController(c echo.Context) error {
-	ID, _ := strconv.Atoi(c.Param("id"))
-	models.DeleteUserByID(ID)
-	return c.JSON(http.StatusOK, map[string]string{
-		"message": "success delete user",
-	})
+	id, _ := strconv.Atoi(c.Param("id"))
+	result, err := models.DeleteUserById(id)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "Failed to delete user")
+	}
+	return c.JSON(http.StatusOK, result)
+}
+
+func UpdateUserController(c echo.Context) error {
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	name := c.FormValue("name")
+	email := c.FormValue("email")
+
+	user, err := models.UpdateUserById(id, name, email)
+
+	if err != nil {
+		log.Printf("FAILED TO UPDATE: %s\n", err)
+		return echo.NewHTTPError(http.StatusBadRequest, "Failed to update user")
+	}
+	return c.JSON(http.StatusOK, user)
 }

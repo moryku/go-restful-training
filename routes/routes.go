@@ -7,12 +7,15 @@ import (
 
 func New() *echo.Echo {
 	e := echo.New()
-
-	// routing
+	// hello routing
 	e.GET("/api/hello", controllers.HelloController)
+
+	// user routing
 	e.GET("/api/users", controllers.FindAllUserController)
+	e.GET("/api/users/:id", controllers.FindUserByIdController)
 	e.POST("/api/users", controllers.CreateUserController)
 	e.DELETE("/api/users/:id", controllers.DeleteUserController)
+	e.PUT("/api/users/:id", controllers.UpdateUserController)
 
 	return e
 }

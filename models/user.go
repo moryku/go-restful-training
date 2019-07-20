@@ -10,14 +10,20 @@ type User struct {
 	Email string `json:"email" xml:"email" form:"email" query:"email"`
 }
 
-func FindAllUser() (interface{}, error) {
-	var (
-		users []User
-	)
+func GetAllUser() (interface{}, error) {
+	var users []User
 	if err := db.Find(&users).Error; err != nil {
 		return nil, err
 	}
 	return users, nil
+}
+
+func GetUserById(id int) (interface{}, error) {
+	var user User
+	if err := db.First(&user, id).Error; err != nil {
+		return nil, err
+	}
+	return user, nil
 }
 
 func CreateUser(m *User) (*User, error) {
@@ -27,16 +33,22 @@ func CreateUser(m *User) (*User, error) {
 	return m, nil
 }
 
-func DeleteUserByID(ID int) {
+func DeleteUserById(id int) (*User, error) {
 	var user User
-	db.Where("ID = ?", ID).Find(&user)
-	db.Delete(&user)
+	db.Where("ID = ?", id).Find(&user)
+	if err := db.Delete(&user).Error; err != nil {
+		return nil, err
+	}
+	return &user, nil
 }
 
-func UpdateUserByID(ID int, name string, email string) {
+func UpdateUserById(id int, name string, email string) (*User, error) {
 	var user User
-	db.Where("ID = ?", ID).Find(&user)
+	db.Where("ID = ?", id).Find(&user)
 	user.Name = name
 	user.Email = email
-	db.Save(&user)
+	if err := db.Save(&user).Error; err != nil {
+		return nil, err
+	}
+	return &user, nil
 }
