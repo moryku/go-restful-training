@@ -10,7 +10,7 @@ type User struct {
 	Email string `json:"email" xml:"email" form:"email" query:"email"`
 }
 
-func GetAllUser() (interface{}, error) {
+func GetUsers() (interface{}, error) {
 	var users []User
 	if err := db.Find(&users).Error; err != nil {
 		return nil, err
@@ -18,7 +18,7 @@ func GetAllUser() (interface{}, error) {
 	return users, nil
 }
 
-func GetUserById(id int) (interface{}, error) {
+func GetUser(id int) (interface{}, error) {
 	var user User
 	if err := db.First(&user, id).Error; err != nil {
 		return nil, err
@@ -42,7 +42,7 @@ func CreateUser(m *User) (*User, error) {
 	return m, nil
 }
 
-func DeleteUserById(id int) (*User, error) {
+func DeleteUser(id int) (*User, error) {
 	var user User
 	db.Where("ID = ?", id).Find(&user)
 	if err := db.Delete(&user).Error; err != nil {
@@ -51,7 +51,7 @@ func DeleteUserById(id int) (*User, error) {
 	return &user, nil
 }
 
-func UpdateUserById(id int, name string, email string) (*User, error) {
+func UpdateUser(id int, name string, email string) (*User, error) {
 	var user User
 	db.Where("ID = ?", id).Find(&user)
 	user.Name = name

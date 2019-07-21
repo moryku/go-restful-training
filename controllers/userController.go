@@ -9,17 +9,17 @@ import (
 	"github.com/labstack/echo"
 )
 
-func FindAllUserController(c echo.Context) error {
-	users, err := models.GetAllUser()
+func GetUsersController(c echo.Context) error {
+	users, err := models.GetUsers()
 	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 	return c.JSON(http.StatusOK, users)
 }
 
-func FindUserByIdController(c echo.Context) error {
+func GetUserByIdController(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
-	user, err := models.GetUserById(id)
+	user, err := models.GetUser(id)
 
 	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
@@ -27,7 +27,7 @@ func FindUserByIdController(c echo.Context) error {
 	return c.JSON(http.StatusOK, user)
 }
 
-func FindUserByLikeControlller(c echo.Context) error {
+func GetUserLikeControlller(c echo.Context) error {
 	name := c.QueryParam("name")
 	users, err := models.GetUserLike(name)
 	if err != nil {
@@ -57,7 +57,7 @@ func CreateUserController(c echo.Context) error {
 
 func DeleteUserController(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
-	result, err := models.DeleteUserById(id)
+	result, err := models.DeleteUser(id)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, "Failed to delete user")
 	}
@@ -70,7 +70,7 @@ func UpdateUserController(c echo.Context) error {
 	name := c.FormValue("name")
 	email := c.FormValue("email")
 
-	user, err := models.UpdateUserById(id, name, email)
+	user, err := models.UpdateUser(id, name, email)
 
 	if err != nil {
 		log.Printf("FAILED TO UPDATE: %s\n", err)

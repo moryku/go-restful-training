@@ -11,6 +11,11 @@ var (
 	db *gorm.DB
 )
 
+func InitialMigration() {
+	db.AutoMigrate(Book{})
+	db.AutoMigrate(User{})
+}
+
 func InitDB(dataSourceName string) {
 	var err error
 	db, err = gorm.Open("mysql", dataSourceName)
