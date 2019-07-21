@@ -26,6 +26,15 @@ func GetUserById(id int) (interface{}, error) {
 	return user, nil
 }
 
+func GetUserLike(match string) (interface{}, error) {
+	var users []User
+	src := "%" + match + "%"
+	if err := db.Where("name LIKE ?", src).Find(&users).Error; err != nil {
+		return nil, err
+	}
+	return users, nil
+}
+
 func CreateUser(m *User) (*User, error) {
 	if err := db.Create(&m).Error; err != nil {
 		return nil, err

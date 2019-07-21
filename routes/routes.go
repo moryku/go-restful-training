@@ -13,6 +13,7 @@ func New() *echo.Echo {
 	// user routing
 	e.GET("/api/users", controllers.FindAllUserController)
 	e.GET("/api/users/:id", controllers.FindUserByIdController)
+	e.GET("/api/users", controllers.FindUserByLikeControlller)
 	e.POST("/api/users", controllers.CreateUserController)
 	e.DELETE("/api/users/:id", controllers.DeleteUserController)
 	e.PUT("/api/users/:id", controllers.UpdateUserController)

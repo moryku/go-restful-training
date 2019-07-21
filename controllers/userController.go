@@ -27,6 +27,15 @@ func FindUserByIdController(c echo.Context) error {
 	return c.JSON(http.StatusOK, user)
 }
 
+func FindUserByLikeControlller(c echo.Context) error {
+	name := c.QueryParam("name")
+	users, err := models.GetUserLike(name)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+	return c.JSON(http.StatusOK, users)
+}
+
 func CreateUserController(c echo.Context) error {
 	user := models.User{}
 
