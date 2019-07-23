@@ -6,19 +6,30 @@ import (
 	"github.com/labstack/echo"
 )
 
-func UserSearchController(c echo.Context) error {
+type User struct {
+	Name  string `json:"name" form:"name"`
+	Email string `json:"email" form:"email"`
+}
+
+func CreateUser(c echo.Context) error {
 	// get data from query param
-	match := c.QueryParam("match")
+	name := c.FormValue("name")
+	email := c.FormValue("email")
+
+	var user User
+	user.Name = name
+	user.Email = email
+
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"match":  match,
-		"result": []string{"adi", "aan", "asif"}, // hardcode data
+		"messages": "success create user",
+		"user":     user,
 	})
 }
 
 func main() {
 	e := echo.New()
 	// routing with query parameter
-	e.GET("/users", UserSearchController)
+	e.POST("/users", CreateUser)
 
 	e.Start(":8000")
 }
