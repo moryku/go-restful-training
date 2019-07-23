@@ -8,7 +8,7 @@ import (
 
 // User Controller
 func UserController(c echo.Context) error {
-	id := c.Param("name_param")
+	id := c.Param("id")
 	// Render Data - JSON Response
 	return c.JSON(http.StatusOK, map[string]string{
 		"id":   id,
