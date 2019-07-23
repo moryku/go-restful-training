@@ -12,13 +12,9 @@ type User struct {
 }
 
 func CreateUser(c echo.Context) error {
-	// get data from query param
-	name := c.FormValue("name")
-	email := c.FormValue("email")
-
-	var user User
-	user.Name = name
-	user.Email = email
+	// binding data
+	user := User{}
+	c.Bind(&user)
 
 	return c.JSON(http.StatusOK, map[string]interface{}{
 		"messages": "success create user",
