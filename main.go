@@ -12,7 +12,7 @@ func main() {
 	// Route / to handler function
 	e.GET("/", HelloController)
 	// start the server, and log if it fails
-	e.Logger.Fatal(e.Start(":8080"))
+	e.Logger.Fatal(e.Start(":8000"))
 }
 
 // handler - Simple handler to make sure environment is setup
