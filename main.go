@@ -6,18 +6,21 @@ import (
 	"github.com/labstack/echo"
 )
 
+type User struct {
+	Name  string
+	Email string
+}
+
+func GetUser(c echo.Context) error {
+	user := User{Name: "Ismail", Email: "ismail@alterra.id"}
+	return c.JSON(http.StatusOK, user)
+}
+
 func main() {
 	// create a new echo instance
 	e := echo.New()
 	// Route / to handler function
-	e.GET("/", HelloController)
+	e.GET("/user", GetUser)
 	// start the server, and log if it fails
-	e.Logger.Fatal(e.Start(":8000"))
-}
-
-// handler - Simple handler to make sure environment is setup
-func HelloController(c echo.Context) error {
-	// return the string "Hello World" as the response body
-	// with an http.StatusOK (200) status
-	return c.String(http.StatusOK, "Hello World")
+	e.Start(":8000")
 }
