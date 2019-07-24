@@ -13,6 +13,7 @@ type Book struct {
 	Price     int    `json:"price" form:"price"`
 }
 
+// get all books
 func GetBooks() (interface{}, error) {
 	var books []Book
 	if err := db.Find(&books).Error; err != nil {
@@ -21,6 +22,7 @@ func GetBooks() (interface{}, error) {
 	return books, nil
 }
 
+// get single book by id
 func GetBook(id int) (interface{}, error) {
 	var book Book
 	if err := db.First(&book, id).Error; err != nil {
@@ -29,6 +31,7 @@ func GetBook(id int) (interface{}, error) {
 	return book, nil
 }
 
+// get many book by match input
 func GetBooksLike(match string) (interface{}, error) {
 	var books []Book
 	src := "%" + match + "%"
@@ -38,6 +41,7 @@ func GetBooksLike(match string) (interface{}, error) {
 	return books, nil
 }
 
+// create new book
 func CreateBook(book *Book) (interface{}, error) {
 	if err := db.Create(&book).Error; err != nil {
 		return nil, err
@@ -45,18 +49,24 @@ func CreateBook(book *Book) (interface{}, error) {
 	return book, nil
 }
 
+// remove book by id
 func DeleteBook(id int) (interface{}, error) {
 	var book Book
-	db.Where("ID = ?", id).Find(&book)
+	if err := db.Where("ID = ?", id).Find(&book).Error; err != nil {
+		return nil, err
+	}
 	if err := db.Delete(&book).Error; err != nil {
 		return nil, err
 	}
 	return &book, nil
 }
 
+// update book by id
 func UpdateBook(id int, newBook *Book) (interface{}, error) {
 	var book Book
-	db.Where("ID = ?", id).Find(&book)
+	if err := db.Where("ID = ?", id).Find(&book).Error; err != nil {
+		return nil, err
+	}
 	if err := db.Save(&newBook).Error; err != nil {
 		return nil, err
 	}

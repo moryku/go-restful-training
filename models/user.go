@@ -10,6 +10,7 @@ type User struct {
 	Email string `json:"email" form:"email"`
 }
 
+// get all user
 func GetUsers() (interface{}, error) {
 	var users []User
 	if err := db.Find(&users).Error; err != nil {
@@ -18,6 +19,7 @@ func GetUsers() (interface{}, error) {
 	return users, nil
 }
 
+// get single user by id
 func GetUser(id int) (interface{}, error) {
 	var user User
 	if err := db.First(&user, id).Error; err != nil {
@@ -26,6 +28,7 @@ func GetUser(id int) (interface{}, error) {
 	return user, nil
 }
 
+// get many user by match input
 func GetUsersLike(match string) (interface{}, error) {
 	var users []User
 	src := "%" + match + "%"
@@ -35,6 +38,7 @@ func GetUsersLike(match string) (interface{}, error) {
 	return users, nil
 }
 
+// create new user
 func CreateUser(user *User) (interface{}, error) {
 	if err := db.Create(&user).Error; err != nil {
 		return nil, err
@@ -42,18 +46,24 @@ func CreateUser(user *User) (interface{}, error) {
 	return user, nil
 }
 
+// remove user by id
 func DeleteUser(id int) (interface{}, error) {
 	var user User
-	db.Where("ID = ?", id).Find(&user)
+	if err := db.Where("ID = ?", id).Find(&user).Error; err != nil {
+		return nil, err
+	}
 	if err := db.Delete(&user).Error; err != nil {
 		return nil, err
 	}
 	return &user, nil
 }
 
+// update user by id
 func UpdateUser(id int, newUser User) (interface{}, error) {
 	var user User
-	db.Where("ID = ?", id).Find(&user)
+	if err := db.Where("ID = ?", id).Find(&user).Error; err != nil {
+		return nil, err
+	}
 	if err := db.Save(&newUser).Error; err != nil {
 		return nil, err
 	}
