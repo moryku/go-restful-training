@@ -1,16 +1,20 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/labstack/echo"
 )
 
-// var db *gorm.DBD
-var err error
+// --------------------- model ----------------------
+
+var (
+	db *gorm.DB
+)
 
 type User struct {
 	gorm.Model
@@ -18,95 +22,105 @@ type User struct {
 	Email string
 }
 
-func InitialMigration() {
-	db, err := gorm.Open("mysql", "root:root123@/go_db?charset=utf8&parseTime=True&loc=Local")
+func InitDB(connectionString string) {
+	var err error
+	db, err = gorm.Open("mysql", connectionString)
 	if err != nil {
-		fmt.Println(err.Error())
-		panic("Failed to connect database.")
+		log.Panic(err)
 	}
-	defer db.Close()
+	if err = db.DB().Ping(); err != nil {
+		panic(err)
+	}
+}
 
+func InitialMigration() {
 	db.AutoMigrate(&User{})
 }
 
-func allUsers(c echo.Context) error {
-	db, err := gorm.Open("mysql", "root:root123@/go_db?charset=utf8&parseTime=True&loc=Local")
-	if err != nil {
-		panic("Could not connect to the database")
-	}
-	defer db.Close()
+// --------------------- controller ----------------------
 
+// get all users
+func GetUsersController(c echo.Context) error {
 	var users []User
-	db.Find(&users)
+
+	if err := db.Find(&users).Error; err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
 		"message": "success get all users",
 		"users":   users,
 	})
 }
 
-func newUser(c echo.Context) error {
-	db, err := gorm.Open("mysql", "root:root123@/go_db?charset=utf8&parseTime=True&loc=Local")
-	if err != nil {
-		panic("failed to connect database")
+// get user by id
+func GetUserController(c echo.Context) error {
+	var user User
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	if err := db.First(&user, id).Error; err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
-	defer db.Close()
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"message": "success get user",
+		"users":   user,
+	})
+}
 
-	name := c.Param("name")
-	email := c.Param("email")
-	db.Create(&User{Name: name, Email: email})
+// create new user
+func CreateUserController(c echo.Context) error {
+	user := User{}
+	c.Bind(&user)
 
-	return c.JSON(http.StatusOK, map[string]string{
+	if err := db.Save(&user).Error; err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+	return c.JSON(http.StatusOK, map[string]interface{}{
 		"message": "success create new user",
+		"user":    user,
 	})
 }
 
-func deleteUser(c echo.Context) error {
-	db, err := gorm.Open("mysql", "root:root123@/go_db?charset=utf8&parseTime=True&loc=Local")
-	if err != nil {
-		panic("Could not connect to the database")
-	}
-	defer db.Close()
-
-	name := c.Param("name")
-
+// delete user by id
+func DeleteUserController(c echo.Context) error {
 	var user User
-	db.Where("name = ?", name).Find(&user)
-	db.Delete(&user)
+	id, _ := strconv.Atoi(c.Param("id"))
 
-	return c.JSON(http.StatusOK, map[string]string{
+	db.Where("ID = ?", id).Find(&user)
+	if err := db.Delete(&user).Error; err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+	return c.JSON(http.StatusOK, map[string]interface{}{
 		"message": "success delete user",
+		"user":    &user,
 	})
 }
 
-func updateUser(c echo.Context) error {
-	db, err := gorm.Open("mysql", "root:root123@/go_db?charset=utf8&parseTime=True&loc=Local")
-	if err != nil {
-		panic("Could not connect to the database")
-	}
-	defer db.Close()
-
-	name := c.Param("name")
-	email := c.Param("email")
-
+// update user by id
+func UpdateUserController(c echo.Context) error {
 	var user User
-	db.Where("name = ?", name).Find(&user)
-	user.Email = email
+	id, _ := strconv.Atoi(c.Param("id"))
 
-	db.Save(&user)
-	return c.JSON(http.StatusOK, map[string]string{
-		"message": "success delete user",
+	db.Where("ID = ?", id).Find(&user)
+	if err := db.Save(&user).Error; err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"message": "success update user",
+		"user":    user,
 	})
 }
 
 func main() {
 	// create a new echo instance
 	e := echo.New()
+	InitDB("root:root123@/go_db?charset=utf8&parseTime=True&loc=Local")
 	// Route / to handler function
-	e.GET("/users", allUsers)
-	e.POST("/user/:name/:email", newUser)
-	e.DELETE("/user/:name", deleteUser)
-	e.PUT("/user/:name/:email", updateUser)
+	e.GET("/users", GetUsersController)
+	e.GET("/users/:id", GetUserController)
+	e.POST("/users", CreateUserController)
+	e.DELETE("/users/:id", DeleteUserController)
+	e.PUT("/users/:id", UpdateUserController)
 
 	// start the server, and log if it fails
-	e.Logger.Fatal(e.Start(":8081"))
+	e.Start(":8081")
 }
