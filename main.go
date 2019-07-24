@@ -18,8 +18,8 @@ var (
 
 type User struct {
 	gorm.Model
-	Name  string
-	Email string
+	Name  string `json:"name" form:"name"`
+	Email string `json:"email" form:"email"`
 }
 
 func InitDB(connectionString string) {
@@ -97,11 +97,15 @@ func DeleteUserController(c echo.Context) error {
 
 // update user by id
 func UpdateUserController(c echo.Context) error {
-	var user User
 	id, _ := strconv.Atoi(c.Param("id"))
 
+	// binding new data
+	newUser := User{}
+	c.Bind(&newUser)
+
+	user := User{}
 	db.Where("ID = ?", id).Find(&user)
-	if err := db.Save(&user).Error; err != nil {
+	if err := db.Save(&newUser).Error; err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
@@ -122,5 +126,5 @@ func main() {
 	e.PUT("/users/:id", UpdateUserController)
 
 	// start the server, and log if it fails
-	e.Start(":8081")
+	e.Start(":8000")
 }
