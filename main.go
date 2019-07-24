@@ -12,5 +12,5 @@ func main() {
 	models.InitDB("root:root123@/go_db?charset=utf8&parseTime=True&loc=Local")
 	models.InitialMigration()
 
-	e.Start(":8080")
+	e.Start(":8000")
 }

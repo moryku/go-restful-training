@@ -21,7 +21,7 @@ func GetBooks() (interface{}, error) {
 	return books, nil
 }
 
-func GetBookById(id int) (interface{}, error) {
+func GetBook(id int) (interface{}, error) {
 	var book Book
 	if err := db.First(&book, id).Error; err != nil {
 		return nil, err
@@ -29,7 +29,7 @@ func GetBookById(id int) (interface{}, error) {
 	return book, nil
 }
 
-func GetBookLike(match string) (interface{}, error) {
+func GetBooksLike(match string) (interface{}, error) {
 	var books []Book
 	src := "%" + match + "%"
 	if err := db.Where("title LIKE ?", src).Find(&books).Error; err != nil {
@@ -38,14 +38,14 @@ func GetBookLike(match string) (interface{}, error) {
 	return books, nil
 }
 
-func CreateBook(book *Book) (*Book, error) {
+func CreateBook(book *Book) (interface{}, error) {
 	if err := db.Create(&book).Error; err != nil {
 		return nil, err
 	}
 	return book, nil
 }
 
-func DeleteBook(id int) (*Book, error) {
+func DeleteBook(id int) (interface{}, error) {
 	var book Book
 	db.Where("ID = ?", id).Find(&book)
 	if err := db.Delete(&book).Error; err != nil {
@@ -54,18 +54,11 @@ func DeleteBook(id int) (*Book, error) {
 	return &book, nil
 }
 
-func UpdateBook(id int, title string, author string, publisher string, isbn string, price int) (*Book, error) {
+func UpdateBook(id int, newBook *Book) (interface{}, error) {
 	var book Book
 	db.Where("ID = ?", id).Find(&book)
-
-	book.Title = title
-	book.Author = author
-	book.Publisher = publisher
-	book.Isbn = isbn
-	book.Price = price
-
-	if err := db.Save(&book).Error; err != nil {
+	if err := db.Save(&newBook).Error; err != nil {
 		return nil, err
 	}
-	return &book, nil
+	return newBook, nil
 }

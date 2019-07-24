@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"log"
 	"net/http"
 	"strconv"
 
@@ -27,9 +26,9 @@ func GetUserByIdController(c echo.Context) error {
 	return c.JSON(http.StatusOK, user)
 }
 
-func GetUserLikeControlller(c echo.Context) error {
+func GetUsersLikeControlller(c echo.Context) error {
 	name := c.QueryParam("name")
-	users, err := models.GetUserLike(name)
+	users, err := models.GetUsersLike(name)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
@@ -38,19 +37,11 @@ func GetUserLikeControlller(c echo.Context) error {
 
 func CreateUserController(c echo.Context) error {
 	user := models.User{}
-
-	name := c.FormValue("name")
-	email := c.FormValue("email")
-
-	defer c.Request().Body.Close()
-
-	user.Name = name
-	user.Email = email
+	c.Bind(&user)
 
 	result, err := models.CreateUser(&user)
 	if err != nil {
-		log.Printf("FAILED TO CREATE : %s\n", err)
-		return echo.NewHTTPError(http.StatusBadRequest, "Failed to create new user")
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 	return c.JSON(http.StatusCreated, result)
 }
@@ -59,7 +50,7 @@ func DeleteUserController(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 	result, err := models.DeleteUser(id)
 	if err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest, "Failed to delete user")
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 	return c.JSON(http.StatusOK, result)
 }
@@ -67,14 +58,12 @@ func DeleteUserController(c echo.Context) error {
 func UpdateUserController(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	name := c.FormValue("name")
-	email := c.FormValue("email")
-
-	user, err := models.UpdateUser(id, name, email)
+	newUser := models.User{}
+	c.Bind(&newUser)
+	result, err := models.UpdateUser(id, newUser)
 
 	if err != nil {
-		log.Printf("FAILED TO UPDATE: %s\n", err)
-		return echo.NewHTTPError(http.StatusBadRequest, "Failed to update user")
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
-	return c.JSON(http.StatusOK, user)
+	return c.JSON(http.StatusOK, result)
 }

@@ -16,18 +16,18 @@ func GetBooksController(c echo.Context) error {
 	return c.JSON(http.StatusOK, books)
 }
 
-func GetBookByIdController(c echo.Context) error {
+func GetBookController(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
-	book, err := models.GetBookById(id)
+	book, err := models.GetBook(id)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 	return c.JSON(http.StatusOK, book)
 }
 
-func GetBookLikeController(c echo.Context) error {
+func GetBooksLikeController(c echo.Context) error {
 	name := c.QueryParam("name")
-	books, err := models.GetBookLike(name)
+	books, err := models.GetBooksLike(name)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
@@ -35,23 +35,12 @@ func GetBookLikeController(c echo.Context) error {
 }
 
 func CreateBookController(c echo.Context) error {
-	title := c.FormValue("title")
-	author := c.FormValue("author")
-	publisher := c.FormValue("publisher")
-	isbn := c.FormValue("isbn")
-	price, _ := strconv.Atoi(c.FormValue("price"))
-
-	book := models.Book{
-		Title:     title,
-		Author:    author,
-		Publisher: publisher,
-		Isbn:      isbn,
-		Price:     price,
-	}
+	book := models.Book{}
+	c.Bind(&book)
 
 	result, err := models.CreateBook(&book)
 	if err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest, "Failed to create book")
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 	return c.JSON(http.StatusCreated, result)
 }
@@ -60,7 +49,7 @@ func DeleteBookController(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 	book, err := models.DeleteBook(id)
 	if err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest, "Failed to delete book")
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 	return c.JSON(http.StatusOK, book)
 }
@@ -68,15 +57,12 @@ func DeleteBookController(c echo.Context) error {
 func UpdateBookController(c echo.Context) error {
 	id, _ := strconv.Atoi("id")
 
-	title := c.FormValue("title")
-	author := c.FormValue("author")
-	publisher := c.FormValue("publisher")
-	isbn := c.FormValue("isbn")
-	price, _ := strconv.Atoi(c.FormValue("price"))
+	newBook := models.Book{}
+	c.Bind(&newBook)
 
-	book, err := models.UpdateBook(id, title, author, publisher, isbn, price)
+	book, err := models.UpdateBook(id, &newBook)
 	if err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest, "Failed to update book")
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 	return c.JSON(http.StatusOK, book)
 }

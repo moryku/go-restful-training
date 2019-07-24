@@ -26,7 +26,7 @@ func GetUser(id int) (interface{}, error) {
 	return user, nil
 }
 
-func GetUserLike(match string) (interface{}, error) {
+func GetUsersLike(match string) (interface{}, error) {
 	var users []User
 	src := "%" + match + "%"
 	if err := db.Where("name LIKE ?", src).Find(&users).Error; err != nil {
@@ -35,14 +35,14 @@ func GetUserLike(match string) (interface{}, error) {
 	return users, nil
 }
 
-func CreateUser(m *User) (*User, error) {
-	if err := db.Create(&m).Error; err != nil {
+func CreateUser(user *User) (interface{}, error) {
+	if err := db.Create(&user).Error; err != nil {
 		return nil, err
 	}
-	return m, nil
+	return user, nil
 }
 
-func DeleteUser(id int) (*User, error) {
+func DeleteUser(id int) (interface{}, error) {
 	var user User
 	db.Where("ID = ?", id).Find(&user)
 	if err := db.Delete(&user).Error; err != nil {
@@ -51,13 +51,11 @@ func DeleteUser(id int) (*User, error) {
 	return &user, nil
 }
 
-func UpdateUser(id int, name string, email string) (*User, error) {
+func UpdateUser(id int, newUser User) (interface{}, error) {
 	var user User
 	db.Where("ID = ?", id).Find(&user)
-	user.Name = name
-	user.Email = email
-	if err := db.Save(&user).Error; err != nil {
+	if err := db.Save(&newUser).Error; err != nil {
 		return nil, err
 	}
-	return &user, nil
+	return &newUser, nil
 }
