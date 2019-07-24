@@ -7,8 +7,6 @@ import (
 
 func New() *echo.Echo {
 	e := echo.New()
-	// hello routing
-	e.GET("/api/hello", c.HelloController)
 
 	// user routing
 	e.GET("/api/users", c.GetUsersController)

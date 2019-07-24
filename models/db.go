@@ -16,9 +16,9 @@ func InitialMigration() {
 	db.AutoMigrate(User{})
 }
 
-func InitDB(dataSourceName string) {
+func InitDB(connectionString string) {
 	var err error
-	db, err = gorm.Open("mysql", dataSourceName)
+	db, err = gorm.Open("mysql", connectionString)
 	if err != nil {
 		log.Panic(err)
 	}

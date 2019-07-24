@@ -6,8 +6,8 @@ import (
 
 type User struct {
 	gorm.Model
-	Name  string `json:"name" xml:"name" form:"name" query:"name"`
-	Email string `json:"email" xml:"email" form:"email" query:"email"`
+	Name  string `json:"name" form:"name"`
+	Email string `json:"email" form:"email"`
 }
 
 func GetUsers() (interface{}, error) {

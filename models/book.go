@@ -6,11 +6,11 @@ import (
 
 type Book struct {
 	gorm.Model
-	Title     string `json:"title" xml:"title" form:"title" query:"title"`
-	Author    string `json:"author" xml:"author" form:"author" query:"author"`
-	Publisher string `json:"publisher" xml:"publisher" form:"publisher" query:"publisher"`
-	Isbn      string `json:"isbn" xml:"isbn" form:"isbn" query:"isbn"`
-	Price     int    `json:"price" xml:"price" form:"price" query:"price"`
+	Title     string `json:"title" form:"title"`
+	Author    string `json:"author" form:"author"`
+	Publisher string `json:"publisher" form:"publisher"`
+	Isbn      string `json:"isbn" form:"isbn"`
+	Price     int    `json:"price" form:"price"`
 }
 
 func GetBooks() (interface{}, error) {
