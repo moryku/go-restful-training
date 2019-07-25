@@ -85,7 +85,9 @@ func DeleteUserController(c echo.Context) error {
 	var user User
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	db.Where("ID = ?", id).Find(&user)
+	if err := db.Where("ID = ?", id).Find(&user).Error; err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
 	if err := db.Delete(&user).Error; err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
@@ -104,7 +106,9 @@ func UpdateUserController(c echo.Context) error {
 	c.Bind(&newUser)
 
 	user := User{}
-	db.Where("ID = ?", id).Find(&user)
+	if err := db.Where("ID = ?", id).Find(&user).Error; err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
 	if err := db.Save(&newUser).Error; err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
