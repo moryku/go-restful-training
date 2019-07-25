@@ -6,8 +6,8 @@ import (
 	"log"
 	"strconv"
 
+	m "github.com/iswanulumam/go-restful-training/middlewares"
 	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -125,10 +125,13 @@ func main() {
 	InitDB("root:root123@/go_db?charset=utf8&parseTime=True&loc=Local")
 	InitialMigration()
 
-	// implement middleware logger
-	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
-		Format: "method=${method}, uri=${uri}, status=${status}\n",
-	}))
+	// implement middleware logger with call in function
+	// e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+	// 	Format: `[${time_rfc3339}] ${status} ${method} ${host}${path} ${latency_human}` + "\n",
+	// }))
+
+	// implement middleware with
+	m.LogMiddlewares(e)
 
 	// Route / to handler function
 	e.GET("/users", GetUsersController)
