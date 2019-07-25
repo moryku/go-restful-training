@@ -125,11 +125,6 @@ func main() {
 	InitDB("root:root123@/go_db?charset=utf8&parseTime=True&loc=Local")
 	InitialMigration()
 
-	// implement middleware logger with call in function
-	// e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
-	// 	Format: `[${time_rfc3339}] ${status} ${method} ${host}${path} ${latency_human}` + "\n",
-	// }))
-
 	// implement middleware with
 	m.LogMiddlewares(e)
 
