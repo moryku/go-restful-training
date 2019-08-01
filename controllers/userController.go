@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -42,6 +43,8 @@ func GetUsersLikeControlller(c echo.Context) error {
 func CreateUserController(c echo.Context) error {
 	user := models.User{}
 	c.Bind(&user)
+
+	fmt.Println(">>>>>>", user)
 
 	result, err := models.CreateUser(&user)
 	if err != nil {

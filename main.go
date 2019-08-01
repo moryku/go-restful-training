@@ -14,7 +14,7 @@ func main() {
 	m.LogMiddlewares(e)
 
 	// init db connection
-	models.InitDB("root:root123@/go_db?charset=utf8&parseTime=True&loc=Local")
+	models.InitDB("root:root123@/crud_go?charset=utf8&parseTime=True&loc=Local")
 	models.InitialMigration()
 
 	e.Start(":8000")
