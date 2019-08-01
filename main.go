@@ -123,6 +123,8 @@ func main() {
 	// create a new echo instance
 	e := echo.New()
 	InitDB("root:root123@/go_db?charset=utf8&parseTime=True&loc=Local")
+	// InitialMigration()
+
 	// Route / to handler function
 	e.GET("/users", GetUsersController)
 	e.GET("/users/:id", GetUserController)
