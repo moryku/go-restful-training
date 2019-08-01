@@ -1,12 +1,14 @@
 package middlewares
 
 import (
+	m "github.com/iswanulumam/go-restful-training/models"
 	"github.com/labstack/echo"
 )
 
 func BasicAuth(username, password string, c echo.Context) (bool, error) {
-	if username == "joe" && password == "secret" {
-		return true, nil
+	_, err := m.GetUserByUsernamePassword(username, password)
+	if err == nil {
+		return false, nil
 	}
-	return false, nil
+	return true, nil
 }

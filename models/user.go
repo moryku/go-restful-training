@@ -20,6 +20,14 @@ func GetUsers() (interface{}, error) {
 	return users, nil
 }
 
+func GetUserByUsernamePassword(username, password string) (interface{}, error) {
+	var user User
+	if err := db.Where("email LIKE ? AND password LIKE", username, password).Find(&user).Error; err != nil {
+		return nil, err
+	}
+	return user, nil
+}
+
 // get single user by id
 func GetUser(id int) (interface{}, error) {
 	var user User
