@@ -1,8 +1,11 @@
 package models
 
 import (
+	"github.com/iswanulumam/go-restful-training/config"
 	"github.com/jinzhu/gorm"
 )
+
+var db = config.DB
 
 type User struct {
 	gorm.Model
