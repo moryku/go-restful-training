@@ -12,10 +12,12 @@ import (
 // get all users
 func GetUsersController(c echo.Context) error {
 	users, err := models.GetUsers()
+	fmt.Println("================")
 	if err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+		return c.String(http.StatusBadRequest, "err.Error()")
 	}
 	return c.JSON(http.StatusOK, users)
+	// return c.String(200, "hello")
 }
 
 // get single user by id
