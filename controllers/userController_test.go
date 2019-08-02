@@ -16,7 +16,7 @@ func TestGetUsersController(t *testing.T) {
 	rec := httptest.NewRecorder()
 
 	c := e.NewContext(req, rec)
-	c.SetPath("/users")
+	c.SetPath("/api/users")
 	h := GetUserController(c)
 
 	if assert.NoError(t, h) {
