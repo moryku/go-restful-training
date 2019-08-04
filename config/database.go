@@ -10,10 +10,10 @@ var (
 )
 
 func init() {
-	ConnectDB()
+	InitDB()
 }
 
-func ConnectDB() {
+func InitDB() {
 	db, err := gorm.Open("mysql", "root:root123@/crud_go?charset=utf8&parseTime=True&loc=Local")
 	if err != nil {
 		panic(err)
