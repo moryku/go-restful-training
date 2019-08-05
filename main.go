@@ -14,7 +14,7 @@ func main() {
 	// implement middleware
 	m.LogMiddlewares(e)
 	// migration database
-	InitialMigration()
+	// InitialMigration()
 
 	e.Start(":8000")
 }
