@@ -15,7 +15,7 @@ func BasicAuth(username, password string, c echo.Context) (bool, error) {
 	return false, nil
 }
 
-func BasicAuthCheckDB(username, password string, c echo.Context) (bool, error) {
+func BasicAuth2(username, password string, c echo.Context) (bool, error) {
 	var user m.User
 	if err := db.Where("email LIKE ? AND password LIKE ?", username, password).Find(&user).Error; err != nil {
 		return false, nil
