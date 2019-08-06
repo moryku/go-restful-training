@@ -75,9 +75,10 @@ func UpdateUser(id int, newUser User) (interface{}, error) {
 }
 
 // ---------------------------------------------------------
+
 func GetUserByUsernamePassword(username, password string) (interface{}, error) {
 	var user User
-	if err := db.Where("email LIKE ? AND password LIKE", username, password).Find(&user).Error; err != nil {
+	if err := db.Where("email LIKE ? AND password LIKE ?", username, password).Find(&user).Error; err != nil {
 		return nil, err
 	}
 	return user, nil
