@@ -6,8 +6,6 @@ import (
 	"github.com/labstack/echo"
 )
 
-var db = config.DB
-
 func BasicAuth(username, password string, c echo.Context) (bool, error) {
 	if username == "admin" && password == "admin" {
 		return true, nil
@@ -16,6 +14,7 @@ func BasicAuth(username, password string, c echo.Context) (bool, error) {
 }
 
 func BasicAuth2(username, password string, c echo.Context) (bool, error) {
+	var db = config.DB
 	var user m.User
 	if err := db.Where("email LIKE ? AND password LIKE ?", username, password).Find(&user).Error; err != nil {
 		return false, nil

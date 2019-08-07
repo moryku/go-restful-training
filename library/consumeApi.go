@@ -1,8 +1,5 @@
 package main
 
-// public open api
-// https://github.com/public-apis/public-apis
-
 import (
 	"encoding/json"
 	"fmt"
@@ -25,9 +22,9 @@ type StarWarsPeople struct {
 
 func main() {
 	response, _ := http.Get("https://swapi.co/api/people/1")
-	defer response.Body.Close()
 
 	responseData, _ := ioutil.ReadAll(response.Body)
+	defer response.Body.Close()
 
 	var LukeSkywalker StarWarsPeople
 	json.Unmarshal(responseData, &LukeSkywalker)

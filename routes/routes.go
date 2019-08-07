@@ -16,8 +16,8 @@ func New() *echo.Echo {
 	e.GET("/api/users/:id", c.GetUserController)
 	e.GET("/api/users", c.GetUsersLikeControlller)
 	e.POST("/api/users", c.CreateUserController)
-	e.DELETE("/api/users/:id", c.DeleteUserController)
-	e.PUT("/api/users/:id", c.UpdateUserController)
+	e.DELETE("/api/users/:id", c.DeleteUserController, m.BasicAuth(auth.BasicAuth))
+	e.PUT("/api/users/:id", c.UpdateUserController, m.BasicAuth(auth.BasicAuth))
 
 	// book routing
 	e.GET("/api/books", c.GetBooksController, m.BasicAuth(auth.BasicAuth2))
