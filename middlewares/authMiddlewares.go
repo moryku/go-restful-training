@@ -6,6 +6,7 @@ import (
 	"github.com/labstack/echo"
 )
 
+// implementing basic auth with hardcoded username & password
 func BasicAuth(username, password string, c echo.Context) (bool, error) {
 	if username == "admin" && password == "admin" {
 		return true, nil
@@ -13,6 +14,7 @@ func BasicAuth(username, password string, c echo.Context) (bool, error) {
 	return false, nil
 }
 
+// implementing basic auth with check database
 func BasicAuth2(username, password string, c echo.Context) (bool, error) {
 	var db = config.DB
 	var user m.User
