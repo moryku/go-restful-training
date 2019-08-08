@@ -1,8 +1,7 @@
-package main
+package library
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 )
@@ -16,21 +15,23 @@ type Main struct {
 	Temp float64 `json:"temp"`
 }
 
-func main() {
+func Weather(city string) (interface{}, error) {
 	var api_key string = "b63ab79141550fee57c0c6e64e5132a2"
-	var url_api string = "https://api.openweathermap.org/data/2.5/weather?" + "appid=" + api_key + "&q=" + "Jakarta"
+	var url_api string = "https://api.openweathermap.org/data/2.5/weather?" + "appid=" + api_key + "&q=" + city
 
 	resp, err := http.Get(url_api)
 	if err != nil {
-		fmt.Println(err.Error())
+		return nil, err
 	}
 	respRead, _ := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		fmt.Println(err.Error())
+		return nil, err
 	}
 	defer resp.Body.Close()
 
 	var weather Response
 	json.Unmarshal(respRead, &weather)
-	fmt.Println(weather.Main.Temp)
+	// fmt.Println(weather.Main.Temp)
+	temp := weather.Main.Temp
+	return temp, nil
 }
