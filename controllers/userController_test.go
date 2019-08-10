@@ -18,10 +18,8 @@ func TestGetUsersController(t *testing.T) {
 	rec := httptest.NewRecorder()
 
 	c := e.NewContext(req, rec)
-	// c.SetPath("/api/users")
-	h := GetUsersController(c)
 
-	if assert.NoError(t, h) {
+	if assert.NoError(t, GetUsersController(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)
 	}
 }
@@ -36,10 +34,8 @@ func TestCreateUserController(t *testing.T) {
 	rec := httptest.NewRecorder()
 
 	c := e.NewContext(req, rec)
-	// c.SetPath("/api/users")
-	h := CreateUserController(c)
 
-	if assert.NoError(t, h) {
+	if assert.NoError(t, CreateUserController(c)) {
 		assert.Equal(t, http.StatusCreated, rec.Code)
 
 		var jsonBody interface{}
