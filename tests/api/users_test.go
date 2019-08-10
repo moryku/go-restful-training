@@ -12,7 +12,7 @@ import (
 func TestGetUsers(t *testing.T) {
 	// call all routes
 	router := routes.New()
-	// // create server based on router
+	// create server based on router
 	server := httptest.NewServer(router)
 	defer server.Close()
 
