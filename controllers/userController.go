@@ -28,16 +28,6 @@ func GetUserController(c echo.Context) error {
 	return c.JSON(http.StatusOK, user)
 }
 
-// get many user by match input
-func GetUsersLikeControlller(c echo.Context) error {
-	name := c.QueryParam("name")
-	users, err := models.GetUsersLike(name)
-	if err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
-	}
-	return c.JSON(http.StatusOK, users)
-}
-
 // create new user
 func CreateUserController(c echo.Context) error {
 	user := models.User{}
