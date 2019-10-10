@@ -1,8 +1,9 @@
 package config
 
 import (
-	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
+	//_ "github.com/go-sql-driver/mysql"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 var (
@@ -14,7 +15,10 @@ func init() {
 }
 
 func InitDB() {
-	db, err := gorm.Open("mysql", "root:root123@/crud_go?charset=utf8&parseTime=True&loc=Local")
+
+	//db, err := gorm.Open("mysql", "root:root123@/crud_go?charset=utf8&parseTime=True&loc=Local")
+	db, err := gorm.Open("sqlite3", "./db/crud_go.db")
+
 	if err != nil {
 		panic(err)
 	}
