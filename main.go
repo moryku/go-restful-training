@@ -1,9 +1,8 @@
 package main
 
 import (
-	"github.com/iswanulumam/go-restful-training/routes"
-
-	m "github.com/iswanulumam/go-restful-training/middlewares"
+	m "restful_training/middlewares"
+	"restful_training/routes"
 )
 
 func main() {

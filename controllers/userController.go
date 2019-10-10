@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/iswanulumam/go-restful-training/models"
 	"github.com/labstack/echo"
+	"restful_training/models"
 )
 
 // get all users

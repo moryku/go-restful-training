@@ -1,8 +1,8 @@
 package models
 
 import (
-	"github.com/iswanulumam/go-restful-training/config"
 	"github.com/jinzhu/gorm"
+	"restful_training/config"
 )
 
 var db = config.DB

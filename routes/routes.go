@@ -1,8 +1,8 @@
 package routes
 
 import (
-	c "github.com/iswanulumam/go-restful-training/controllers"
 	"github.com/labstack/echo"
+	c "restful_training/controllers"
 )
 
 func New() *echo.Echo {
