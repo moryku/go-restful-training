@@ -1,8 +1,8 @@
 package main
 
 import (
-	m "restful_training/middlewares"
-	"restful_training/routes"
+	m "middlewares"
+	"routes"
 )
 
 func main() {

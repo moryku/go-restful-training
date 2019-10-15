@@ -1,0 +1,88 @@
+# github.com/ajg/form v1.5.1
+github.com/ajg/form
+# github.com/davecgh/go-spew v1.1.1
+github.com/davecgh/go-spew/spew
+# github.com/dgrijalva/jwt-go v3.2.0+incompatible
+github.com/dgrijalva/jwt-go
+# github.com/fatih/structs v1.1.0
+github.com/fatih/structs
+# github.com/gavv/httpexpect v2.0.0+incompatible
+github.com/gavv/httpexpect
+# github.com/go-sql-driver/mysql v1.4.1
+github.com/go-sql-driver/mysql
+# github.com/google/go-querystring v1.0.0
+github.com/google/go-querystring/query
+# github.com/gorilla/websocket v1.4.1
+github.com/gorilla/websocket
+# github.com/imkira/go-interpol v1.1.0
+github.com/imkira/go-interpol
+# github.com/iswanulumam/go-restful-training v0.0.0-20190801095928-7412c9939331
+github.com/iswanulumam/go-restful-training/routes
+github.com/iswanulumam/go-restful-training/controllers
+github.com/iswanulumam/go-restful-training/models
+# github.com/jinzhu/gorm v1.9.11
+github.com/jinzhu/gorm
+github.com/jinzhu/gorm/dialects/mysql
+# github.com/jinzhu/inflection v1.0.0
+github.com/jinzhu/inflection
+# github.com/klauspost/compress v1.8.2
+github.com/klauspost/compress/flate
+github.com/klauspost/compress/gzip
+github.com/klauspost/compress/zlib
+# github.com/klauspost/cpuid v1.2.1
+github.com/klauspost/cpuid
+# github.com/labstack/echo v3.3.10+incompatible
+github.com/labstack/echo
+github.com/labstack/echo/middleware
+# github.com/labstack/gommon v0.3.0
+github.com/labstack/gommon/color
+github.com/labstack/gommon/log
+github.com/labstack/gommon/bytes
+github.com/labstack/gommon/random
+# github.com/mattn/go-colorable v0.1.2
+github.com/mattn/go-colorable
+# github.com/mattn/go-isatty v0.0.9
+github.com/mattn/go-isatty
+# github.com/mattn/go-sqlite3 v1.11.0
+github.com/mattn/go-sqlite3
+# github.com/moul/http2curl v1.0.0
+github.com/moul/http2curl
+# github.com/pmezard/go-difflib v1.0.0
+github.com/pmezard/go-difflib/difflib
+# github.com/sergi/go-diff v1.0.0
+github.com/sergi/go-diff/diffmatchpatch
+# github.com/stretchr/testify v1.4.0
+github.com/stretchr/testify/assert
+github.com/stretchr/testify/require
+# github.com/valyala/bytebufferpool v1.0.0
+github.com/valyala/bytebufferpool
+# github.com/valyala/fasthttp v1.5.0
+github.com/valyala/fasthttp
+github.com/valyala/fasthttp/fasthttputil
+github.com/valyala/fasthttp/stackless
+# github.com/valyala/fasttemplate v1.1.0
+github.com/valyala/fasttemplate
+# github.com/xeipuuv/gojsonpointer v0.0.0-20190905194746-02993c407bfb
+github.com/xeipuuv/gojsonpointer
+# github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415
+github.com/xeipuuv/gojsonreference
+# github.com/xeipuuv/gojsonschema v1.1.0
+github.com/xeipuuv/gojsonschema
+# github.com/yalp/jsonpath v0.0.0-20180802001716-5cc68e5049a0
+github.com/yalp/jsonpath
+# github.com/yudai/gojsondiff v1.0.0
+github.com/yudai/gojsondiff
+github.com/yudai/gojsondiff/formatter
+# github.com/yudai/golcs v0.0.0-20170316035057-ecda9a501e82
+github.com/yudai/golcs
+# golang.org/x/crypto v0.0.0-20190325154230-a5d413f7728c
+golang.org/x/crypto/acme/autocert
+golang.org/x/crypto/acme
+# golang.org/x/net v0.0.0-20190827160401-ba9fcec4b297
+golang.org/x/net/publicsuffix
+# golang.org/x/sys v0.0.0-20190813064441-fde4db37ae7a
+golang.org/x/sys/unix
+# google.golang.org/appengine v1.4.0
+google.golang.org/appengine/cloudsql
+# gopkg.in/yaml.v2 v2.2.2
+gopkg.in/yaml.v2
