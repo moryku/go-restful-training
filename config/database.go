@@ -3,6 +3,7 @@ package config
 import (
 	"github.com/jinzhu/gorm"
 	//_ "github.com/db-sql-driver/mysql"
+	"restful_training/models"
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -23,4 +24,5 @@ func InitDB() {
 		panic(err)
 	}
 	DB = db
+	models.InitialMigration()
 }
