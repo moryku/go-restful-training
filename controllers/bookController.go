@@ -5,7 +5,7 @@ import (
 	"strconv"
 
 	"github.com/labstack/echo"
-	"restful_training/models"
+	"github.com/moryku/go-restful-training/models"
 )
 
 // get all books

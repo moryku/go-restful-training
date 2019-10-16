@@ -2,7 +2,7 @@ package routes
 
 import (
 	"github.com/labstack/echo"
-	c "restful_training/controllers"
+	c "github.com/moryku/go-restful-training/controllers"
 )
 
 func New() *echo.Echo {

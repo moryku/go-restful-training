@@ -2,7 +2,7 @@ package models
 
 import (
 	"github.com/jinzhu/gorm"
-	"restful_training/config"
+	"github.com/moryku/go-restful-training/config"
 )
 
 var db = config.DB

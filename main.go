@@ -1,20 +1,24 @@
 package main
 
 import (
-	"log"
+	"github.com/moryku/go-restful-training/config"
+	"github.com/moryku/go-restful-training/db"
+	m "github.com/moryku/go-restful-training/middlewares"
+	"github.com/moryku/go-restful-training/routes"
 	"os"
-	m "restful_training/middlewares"
-	"restful_training/routes"
 )
 
 func main() {
 	port := os.Getenv("PORT")
 
+	config.InitDB()
+	db.InitialMigration()
+
 	e := routes.New()
-	// implement middleware with
 	m.LogMiddlewares(e)
 	if port == "" {
-		log.Fatal("$PORT must be set")
+		port = "9000"
+		//log.Fatal("$PORT must be set")
 	}
 
 	e.Logger.Fatal(e.Start(":" + port))

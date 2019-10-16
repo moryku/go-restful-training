@@ -1,4 +1,4 @@
-module restful_training
+module github.com/moryku/go-restful-training
 
 go 1.12
 
