@@ -16,10 +16,6 @@ func main() {
 
 	e := routes.New()
 	m.LogMiddlewares(e)
-	if port == "" {
-		port = "9000"
-		//log.Fatal("$PORT must be set")
-	}
 
 	e.Logger.Fatal(e.Start(":" + port))
 }
